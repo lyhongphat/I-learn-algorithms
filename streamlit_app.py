@@ -14,8 +14,18 @@ def main():
         ["English", "Vietnamese", "Japanese", "Korean"]
     )
     
-    # Get translations for the selected language
-    t = load_translation(language)
+    # Get translations for the selected language and any missing keys
+    t, missing_keys = load_translation(language)
+
+    # Show notification if there are missing translations
+    if missing_keys and language != "English":
+        warnings = {
+            "Vietnamese": "Một số nội dung chưa được dịch sang tiếng Việt và sẽ được hiển thị bằng tiếng Anh.",
+            "Japanese": "一部のコンテンツは日本語に完全には翻訳されておらず、英語で表示されます。",
+            "Korean": "일부 내용은 아직 한국어로 완전히 번역되지 않아 영어로 표시됩니다。",
+            "English": "Some content is not yet fully translated and will be shown in English."
+        }
+        st.warning(warnings[language])
 
     st.title(f"{t['page_title']} 🧮")
     st.markdown("---")
