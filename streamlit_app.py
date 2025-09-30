@@ -30,104 +30,55 @@ def main():
     st.title(f"{t['page_title']} 🧮")
     st.markdown("---")
 
+    # Define categories list
+    categories = [
+        "arrays_hashing",
+        "two_pointers",
+        "stack",
+        "binary_search",
+        "sliding_window",
+        "linked_list",
+        "trees",
+        "tries",
+        "heap",
+        "backtracking",
+        "graphs",
+        "advanced_graphs",
+        "dp_1d",
+        "dp_2d",
+        "greedy",
+        "intervals",
+        "math_geometry",
+        "bit_manipulation"
+    ]
+
+    def on_category_change():
+        st.session_state.selected_category_index = st.session_state.temp_category_index
+
+    # Initialize session states if not exists
+    if 'selected_category_index' not in st.session_state:
+        st.session_state.selected_category_index = 0
+    if 'temp_category_index' not in st.session_state:
+        st.session_state.temp_category_index = st.session_state.selected_category_index
+
     # Sidebar for navigation
     st.sidebar.title(t["categories"])
-    category = st.sidebar.radio(
+    _ = st.sidebar.radio(
         t["select_category"],
-        [
-            t["arrays_hashing"],
-            t["two_pointers"],
-            t["stack"],
-            t["binary_search"],
-            t["sliding_window"],
-            t["linked_list"],
-            t["trees"],
-            t["tries"],
-            t["heap"],
-            t["backtracking"],
-            t["graphs"],
-            t["advanced_graphs"],
-            t["dp_1d"],
-            t["dp_2d"],
-            t["greedy"],
-            t["intervals"],
-            t["math_geometry"],
-            t["bit_manipulation"]
-        ]
+        range(len(categories)),
+        format_func=lambda x: t[categories[x]],
+        key="temp_category_index",
+        on_change=on_category_change,
+        index=st.session_state.selected_category_index
     )
 
-    # Content based on selection
-    if category == t["arrays_hashing"]:
-        st.header(t["arrays_hashing"])
-        st.write(t["arrays_hashing_desc"])
-
-    elif category == t["two_pointers"]:
-        st.header(t["two_pointers"])
-        st.write(t["two_pointers_desc"])
-
-    elif category == t["stack"]:
-        st.header(t["stack"])
-        st.write(t["stack_desc"])
-
-    elif category == t["binary_search"]:
-        st.header(t["binary_search"])
-        st.write(t["binary_search_desc"])
-
-    elif category == t["sliding_window"]:
-        st.header(t["sliding_window"])
-        st.write(t["sliding_window_desc"])
-
-    elif category == t["linked_list"]:
-        st.header(t["linked_list"])
-        st.write(t["linked_list_desc"])
-
-    elif category == t["trees"]:
-        st.header(t["trees"])
-        st.write(t["trees_desc"])
-
-    elif category == t["tries"]:
-        st.header(t["tries"])
-        st.write(t["tries_desc"])
-
-    elif category == t["heap"]:
-        st.header(t["heap"])
-        st.write(t["heap_desc"])
-
-    elif category == t["backtracking"]:
-        st.header(t["backtracking"])
-        st.write(t["backtracking_desc"])
-
-    elif category == t["graphs"]:
-        st.header(t["graphs"])
-        st.write(t["graphs_desc"])
-
-    elif category == t["advanced_graphs"]:
-        st.header(t["advanced_graphs"])
-        st.write(t["advanced_graphs_desc"])
-
-    elif category == t["dp_1d"]:
-        st.header(t["dp_1d"])
-        st.write(t["dp_1d_desc"])
-
-    elif category == t["dp_2d"]:
-        st.header(t["dp_2d"])
-        st.write(t["dp_2d_desc"])
-
-    elif category == t["greedy"]:
-        st.header(t["greedy"])
-        st.write(t["greedy_desc"])
-
-    elif category == t["intervals"]:
-        st.header(t["intervals"])
-        st.write(t["intervals_desc"])
-
-    elif category == t["math_geometry"]:
-        st.header(t["math_geometry"])
-        st.write(t["math_geometry_desc"])
-
-    elif category == t["bit_manipulation"]:
-        st.header(t["bit_manipulation"])
-        st.write(t["bit_manipulation_desc"])
+    # Get current category key
+    current_category = categories[st.session_state.selected_category_index]
+    
+    # Display content
+    st.header(t[current_category])
+    if f"{current_category}_desc" in t:
+        st.write(t[f"{current_category}_desc"])
 
 if __name__ == "__main__":
     main()
